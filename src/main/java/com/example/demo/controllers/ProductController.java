@@ -2,9 +2,13 @@ package com.example.demo.controllers;
 
 import com.example.demo.models.Product;
 import com.example.demo.repo.ProductRepo;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,8 +48,15 @@ public class ProductController {
     }
 
     @PostMapping("/products/create")
-    public String createProduct(@ModelAttribute Product newProduct) {
-        // redirect to the /products route
+    public String createProduct(@Valid @ModelAttribute Product newProduct, BindingResult bindingResult) {
+        System.out.println(bindingResult);
+        if (bindingResult.hasErrors()) {
+            System.out.println("Error in product submitted data");
+            return "products/create";
+            
+        }
+        System.out.println("Valid product received");
+        productRepo.save(newProduct);
         return "redirect:/products";
     }
 }
