@@ -49,7 +49,6 @@ public class ProductController {
 
     @PostMapping("/products/create")
     public String createProduct(@Valid @ModelAttribute Product newProduct, BindingResult bindingResult) {
-        System.out.println(bindingResult);
         if (bindingResult.hasErrors()) {
             System.out.println("Error in product submitted data");
             return "products/create";
@@ -57,6 +56,25 @@ public class ProductController {
         }
         System.out.println("Valid product received");
         productRepo.save(newProduct);
+        return "redirect:/products";
+    }
+
+    @GetMapping("/products/{id}/edit")
+    public String showUpdateProduct(@PathVariable Long id, Model model) {
+        Product product = productRepo.findById(id).orElseThrow( () -> new RuntimeException("Product not found"));
+        model.addAttribute(product);
+        return "products/edit";
+        
+    }
+
+    @PostMapping("/products/{id}/edit")
+    public String updateProduct(@PathVariable Long id, @Valid @ModelAttribute Product product, 
+                                BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "products/edit";
+        }
+        product.setId(id); // Ensure we're updating the correct product
+        productRepo.save(product);
         return "redirect:/products";
     }
 }
