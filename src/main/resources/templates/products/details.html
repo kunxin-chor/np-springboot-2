@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Details</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 20px; }
+        h1 { color: #333; }
+        .product-details { background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 5px; }
+        .product-details p { margin: 10px 0; }
+        .back-link { display: inline-block; margin-top: 20px; color: #007bff; text-decoration: none; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <h1>Product Details</h1>
+    <div class="product-details">
+        <p><strong>ID:</strong> <span th:text="${product.id}"></span></p>
+        <p><strong>Name:</strong> <span th:text="${product.name}"></span></p>
+        <p><strong>Description:</strong> <span th:text="${product.description}"></span></p>
+        <p><strong>Price:</strong> $<span th:text="${product.price}"></span></p>
+    </div>
+    <a href="/products" class="back-link">Back to Product List</a>
+</body>
+</html>
