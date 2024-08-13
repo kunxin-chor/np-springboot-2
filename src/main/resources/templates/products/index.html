@@ -22,6 +22,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Price</th>
+                <th>Category</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -30,9 +31,11 @@
                 <td th:text="${product.id}"></td>
                 <td th:text="${product.name}"></td>
                 <td th:text="${'$' + product.price}"></td>
+                <td th:text="${product.category != null ? product.category.name : 'N/A'}"></td>
                 <td>
                     <a th:href="@{/products/{id}(id=${product.id})}">View Details</a>
                     <a th:href="@{/products/{id}/edit(id=${product.id})}">Edit</a>
+                    <a th:href="@{/products/{id}/delete(id=${product.id})}">Delete</a>
                 </td>
             </tr>
         </tbody>
