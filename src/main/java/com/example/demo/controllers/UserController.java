@@ -3,6 +3,9 @@ package com.example.demo.controllers;
 import com.example.demo.models.User;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,5 +38,25 @@ public class UserController {
     public String login() {
         System.out.println("Login page requested");
         return "user/login";
+    }
+
+     @GetMapping("/profile")
+    public String showProfilePage(Model model) {
+        // Get the logged-in user details
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = "";
+        
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            username = userDetails.getUsername();
+        }
+
+        // Fetch the user from the database using the username
+        User user = userService.findUserByUsername(username);
+        
+        // Add user details to the model to be displayed on the profile page
+        model.addAttribute("user", user);
+        
+        return "user/profile";
     }
 }
