@@ -25,7 +25,9 @@
                     </div>
                     <div class="card-footer text-end">
                         <a href="/" class="btn btn-primary">Home</a>
-                        <a href="/logout" class="btn btn-secondary">Logout</a>
+                        <form th:action="@{/logout}" method="post" style="display: inline;">
+                            <button type="submit" class="btn btn-secondary">Logout</button>
+                        </form>
                     </div>
                 </div>
             </div>
