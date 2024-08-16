@@ -35,6 +35,7 @@ public class SecurityConfig {
     }
 
      @Bean
+     // Dependency injection
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

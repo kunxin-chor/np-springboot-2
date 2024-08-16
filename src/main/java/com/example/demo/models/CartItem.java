@@ -1,5 +1,7 @@
 package com.example.demo.models;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,19 +21,17 @@ public class CartItem {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    private String productName;
-    private int quantity;
-    private double price;
 
+    private int quantity;
+    
     public CartItem() {
 
     }
 
-    public CartItem(User user, String productName, int quantity, double price) {
+    public CartItem(User user, Product product, int quantity) {
         this.user = user;
-        this.productName = productName;
+        this.product = product;
         this.quantity = quantity;
-        this.price = price;
     }
 
     public Long getId() {
@@ -50,12 +50,12 @@ public class CartItem {
         this.user = user;
     }
 
-    public String getProductName() {
-        return productName;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public int getQuantity() {
@@ -65,13 +65,26 @@ public class CartItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+ 
 
-    public double getPrice() {
-        return price;
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+     // Convenience method to calculate the total price for this cart item
+    public BigDecimal getTotalPrice() {
+        return product.getPrice().multiply(BigDecimal.valueOf(quantity));
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    // toString method
+    @Override
+    public String toString() {
+        return "CartItem{" +
+                "id=" + id +
+                ", user=" + user.getUsername() +
+                ", product=" + product.getName() +
+                ", quantity=" + quantity +
+                '}';
     }
 
     
