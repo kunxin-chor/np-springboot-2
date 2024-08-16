@@ -1,5 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+th:replace="~{base :: html(
+    ~{::title},
+    ~{::main},
+    ~{},
+    ~{}
+)}">
 <head>
     <title>Product Details</title>
     <meta charset="UTF-8">

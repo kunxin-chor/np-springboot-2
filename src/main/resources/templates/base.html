@@ -16,6 +16,13 @@
             <div class="container">
                 <a class="navbar-brand" href="#">Your App Name</a>
                 <!-- Add more navigation items as needed -->
+                <div class="navbar-nav ms-auto">
+                    <span class="nav-item nav-link" th:if="${isAuthenticated}">
+                        Welcome, <span th:text="${currentUser}"></span>!
+                    </span>
+                    <a class="nav-item nav-link" href="/logout" th:if="${isAuthenticated}">Logout</a>
+                    <a class="nav-item nav-link" href="/login" th:unless="${isAuthenticated}">Login</a>
+                </div>
             </div>
         </nav>
     </header>
