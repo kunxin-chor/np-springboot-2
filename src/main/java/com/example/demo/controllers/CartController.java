@@ -50,7 +50,7 @@ public class CartController {
             cartItemServices.addToCart(user, product, quantity);
             
             redirectAttributes.addFlashAttribute("message", 
-                String.format("Added %d %s to your cart", quantity, product.getName()));
+                String.format("Added %d %s to your cart", quantity, product.getName()));                
 
             return "redirect:/cart";
 

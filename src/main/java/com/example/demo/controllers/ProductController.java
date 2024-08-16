@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashSet;
 import java.util.List;
@@ -64,7 +65,8 @@ public class ProductController {
     @PostMapping("/products/create")
     public String createProduct(@Valid @ModelAttribute Product newProduct, 
             @RequestParam(required=false) List<Long> tagIds,
-            BindingResult bindingResult, Model model) {
+            BindingResult bindingResult, Model model,
+            RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             System.out.println("Error in product submitted data");
             model.addAttribute("categories", categoryRepo.findAll());
@@ -79,7 +81,8 @@ public class ProductController {
             newProduct.setTags(tags);            
         }
 
-        System.out.println("Valid product received");
+        // System.out.println("Valid product received");
+        redirectAttributes.addFlashAttribute("message", "New product has been added successfully");
         productRepo.save(newProduct);
         return "redirect:/products";
     }
@@ -97,6 +100,7 @@ public class ProductController {
     @PostMapping("/products/{id}/edit")
     public String updateProduct(@PathVariable Long id, @Valid @ModelAttribute Product product, 
                                 @RequestParam(required=false) List<Long> tagIds,
+                                RedirectAttributes redirectAttributes,
                                 BindingResult bindingResult, Model model) {
 
         System.out.println(product.getCategory());
@@ -118,6 +122,7 @@ public class ProductController {
 
         product.setId(id); // Ensure we're updating the correct product
         productRepo.save(product);
+        redirectAttributes.addFlashAttribute("message", "Product has been edited");
         return "redirect:/products";
     }
 
