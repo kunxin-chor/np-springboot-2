@@ -12,6 +12,7 @@ import jakarta.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class StripeServices {
@@ -36,6 +37,7 @@ public class StripeServices {
             SessionCreateParams.LineItem.PriceData.ProductData productData = SessionCreateParams.LineItem.PriceData.ProductData
                     .builder()
                     .setName(item.getProduct().getName())
+                    .putMetadata("product_id", item.getProduct().getId().toString())
                     .build();
 
             SessionCreateParams.LineItem.PriceData priceData = SessionCreateParams.LineItem.PriceData
